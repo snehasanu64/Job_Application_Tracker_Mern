@@ -1,9 +1,8 @@
 import axios from "axios";
 
 // In development, Vite reads from .env (VITE_API_URL=http://localhost:5000/api/jobs)
-// In production (Vercel), set VITE_API_URL to your deployed Render backend URL,
-// e.g. https://your-backend.onrender.com/api/jobs
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api/jobs";
+// In production (all-in-one), requests go to the same origin, so we use relative path.
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api/jobs' : 'http://localhost:5000/api/jobs');
 
 // Create axios instance with timeout and retry logic
 const api = axios.create({

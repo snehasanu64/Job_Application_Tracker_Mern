@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
@@ -15,10 +16,19 @@ app.use(express.json());
 // Routes
 app.use("/api/jobs", jobRoutes);
 
-// Health check route (useful for Render to verify the service is up)
-app.get("/", (req, res) => {
-  res.send("Job Application Tracker API is running.");
-});
+// Serve frontend in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/dist", "index.html"));
+  });
+} else {
+  // Health check route for development
+  app.get("/", (req, res) => {
+    res.send("Job Application Tracker API is running in development mode.");
+  });
+}
 
 // Connect to MongoDB with retry logic
 const connectDB = async () => {
