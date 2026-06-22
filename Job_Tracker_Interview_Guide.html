@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Tracker — MERN Stack Project Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #eef2ff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #ffffff;
+      --code-bg: #f8fafc;
+      --green: #16a34a;
+      --blue: #2563eb;
+      --amber: #d97706;
+      --red: #dc2626;
+    }
+
+    @media print {
+      body { font-size: 11pt; }
+      .page-break { page-break-before: always; }
+      .no-break { page-break-inside: avoid; }
+      @page { margin: 1.5cm 2cm; }
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 30px;
+    }
+
+    /* ---- Cover / Title ---- */
+    .cover {
+      text-align: center;
+      padding: 60px 0 40px;
+      border-bottom: 3px solid var(--primary);
+      margin-bottom: 40px;
+    }
+    .cover-icon { font-size: 48px; margin-bottom: 16px; }
+    .cover h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .cover .subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .cover .tech-pills {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ---- Section Headers ---- */
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+    h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 20px 0 8px;
+    }
+    h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 16px 0 6px;
+    }
+
+    p, li { font-size: 13px; margin-bottom: 6px; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 4px; }
+
+    strong { color: var(--text); }
+
+    /* ---- Code Blocks ---- */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      font-size: 11.5px;
+      line-height: 1.6;
+      margin: 10px 0 16px;
+    }
+    code {
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--primary);
+    }
+
+    /* ---- Diagram Box ---- */
+    .diagram-box {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      margin: 16px 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 2;
+    }
+    .arrow { color: var(--primary); font-weight: 700; }
+
+    /* ---- Table ---- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px;
+      font-size: 12px;
+    }
+    th {
+      background: var(--primary);
+      color: white;
+      text-align: left;
+      padding: 8px 12px;
+      font-weight: 600;
+    }
+    th:first-child { border-radius: 6px 0 0 0; }
+    th:last-child { border-radius: 0 6px 0 0; }
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    tr:nth-child(even) td { background: var(--code-bg); }
+
+    /* ---- Info Box ---- */
+    .info-box {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 12px 0;
+      font-size: 12px;
+    }
+    .info-box.green { border-color: var(--green); background: #f0fdf4; }
+    .info-box.amber { border-color: var(--amber); background: #fffbeb; }
+
+    /* ---- File Card ---- */
+    .file-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 10px 0;
+    }
+    .file-card .file-name {
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .file-card p { margin-bottom: 4px; }
+
+    .footer {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 2px solid var(--border);
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ COVER ============ -->
+  <div class="cover">
+    <div class="cover-icon">📋</div>
+    <h1>Job Application Tracker</h1>
+    <p class="subtitle">Full-Stack MERN Project — Interview Reference Guide</p>
+    <div class="tech-pills">
+      <span class="pill">MongoDB</span>
+      <span class="pill">Express.js</span>
+      <span class="pill">React 18</span>
+      <span class="pill">Node.js</span>
+      <span class="pill">Vite</span>
+      <span class="pill">Axios</span>
+      <span class="pill">Mongoose</span>
+    </div>
+  </div>
+
+  <!-- ============ 1. PROJECT OVERVIEW ============ -->
+  <h2>1. Project Overview</h2>
+  <p>A full-stack web application that helps users <strong>track their job applications</strong>. Users can add job applications with company name, role, and date applied. They can update the status of each application (Applied → Interview → Offer → Rejected) and delete entries they no longer need.</p>
+
+  <h4>Key Features</h4>
+  <ul>
+    <li><strong>Add</strong> new job applications with company, role, date, and status</li>
+    <li><strong>Update</strong> application status (Applied, Interview, Offer, Rejected)</li>
+    <li><strong>Delete</strong> applications</li>
+    <li><strong>Filter</strong> applications by status</li>
+    <li><strong>Dashboard</strong> with real-time statistics</li>
+    <li><strong>Auto-retry & timeout handling</strong> for reliable data saving</li>
+  </ul>
+
+  <!-- ============ 2. ARCHITECTURE ============ -->
+  <h2>2. Architecture</h2>
+
+  <div class="diagram-box">
+    <strong>[ React Frontend ]</strong> &nbsp; <span class="arrow">— Axios HTTP Requests →</span> &nbsp; <strong>[ Express API ]</strong> &nbsp; <span class="arrow">— Mongoose →</span> &nbsp; <strong>[ MongoDB Atlas ]</strong>
+    <br>
+    <span style="font-size: 11px; color: #64748b;">
+      Vercel (Port 3000) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Render (Port 5000) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Cloud Database
+    </span>
+  </div>
+
+  <div class="info-box">
+    <strong>How it works:</strong> The React frontend sends HTTP requests (GET, POST, PUT, DELETE) via Axios to the Express backend. The backend uses Mongoose to read/write data from a MongoDB Atlas cloud database, then sends JSON responses back to the frontend.
+  </div>
+
+  <!-- ============ 3. LANGUAGES & TECH STACK ============ -->
+  <h2>3. Languages & Tech Stack</h2>
+
+  <table>
+    <thead>
+      <tr><th>Category</th><th>Technology</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Language</td><td>JavaScript (JS / JSX)</td><td>Core language for both frontend & backend</td></tr>
+      <tr><td>Language</td><td>HTML5</td><td>Page structure (index.html entry point)</td></tr>
+      <tr><td>Language</td><td>CSS3</td><td>Styling, layout, animations</td></tr>
+      <tr><td>Frontend</td><td>React 18</td><td>Component-based UI library</td></tr>
+      <tr><td>Frontend</td><td>Vite</td><td>Fast build tool & dev server</td></tr>
+      <tr><td>Frontend</td><td>Axios</td><td>HTTP client for API calls</td></tr>
+      <tr><td>Backend</td><td>Node.js</td><td>JavaScript runtime for server</td></tr>
+      <tr><td>Backend</td><td>Express.js</td><td>Web framework for REST API</td></tr>
+      <tr><td>Backend</td><td>Mongoose</td><td>ODM library (Object Data Modeling) for MongoDB</td></tr>
+      <tr><td>Database</td><td>MongoDB Atlas</td><td>Cloud-hosted NoSQL database</td></tr>
+      <tr><td>Hosting</td><td>Vercel</td><td>Frontend deployment</td></tr>
+      <tr><td>Hosting</td><td>Render</td><td>Backend deployment</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============ 4. PROJECT STRUCTURE ============ -->
+  <div class="page-break"></div>
+  <h2>4. Project Structure</h2>
+  <pre>job-tracker-mern/
+├── backend/                    ← Express + Mongoose API
+│   ├── models/
+│   │   └── Job.js              ← Mongoose schema & model
+│   ├── routes/
+│   │   └── jobRoutes.js        ← REST API route handlers
+│   ├── server.js               ← App entry point, DB connection
+│   ├── .env                    ← Environment variables (MONGO_URI)
+│   └── package.json
+│
+├── frontend/                   ← React (Vite) application
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── StatsBar.jsx    ← Dashboard statistics bar
+│   │   │   ├── JobForm.jsx     ← Form to add new jobs
+│   │   │   └── JobCard.jsx     ← Individual job card display
+│   │   ├── App.jsx             ← Main app, state management
+│   │   ├── api.js              ← Axios HTTP client with retry
+│   │   ├── index.css           ← All CSS styles
+│   │   └── main.jsx            ← React DOM entry point
+│   ├── index.html              ← HTML entry point
+│   ├── .env                    ← Environment variables (API URL)
+│   └── package.json
+│
+└── README.md</pre>
+
+  <!-- ============ 5. BACKEND EXPLANATION ============ -->
+  <h2>5. Backend — File by File</h2>
+
+  <!-- server.js -->
+  <div class="file-card no-break">
+    <div class="file-name">📄 backend/server.js — Entry Point</div>
+    <p><strong>What it does:</strong> Initializes Express, sets up middleware, registers routes, and connects to MongoDB.</p>
+    <h4>Key Concepts</h4>
+    <ul>
+      <li><code>cors()</code> — Allows the React frontend (different port) to talk to this server (Cross-Origin Resource Sharing)</li>
+      <li><code>express.json()</code> — Parses incoming JSON request bodies from the frontend</li>
+      <li><code>app.use("/api/jobs", jobRoutes)</code> — Mounts all job-related routes under <code>/api/jobs</code></li>
+      <li><strong>Auto-reconnect:</strong> If MongoDB connection drops, it retries every 5 seconds instead of crashing</li>
+      <li><strong>Server starts before DB:</strong> Express starts listening immediately so Render doesn't kill the process</li>
+    </ul>
+    <pre>// Key connection logic
+const connectDB = async () =&gt; {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+    });
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.log("Retrying connection in 5 seconds...");
+    setTimeout(connectDB, 5000);  // Retry instead of crash
+  }
+};</pre>
+  </div>
+
+  <!-- Job.js -->
+  <div class="file-card no-break">
+    <div class="file-name">📄 backend/models/Job.js — Mongoose Schema</div>
+    <p><strong>What it does:</strong> Defines the structure (schema) of a Job document in MongoDB.</p>
+    <pre>const jobSchema = new mongoose.Schema({
+  company:     { type: String, required: true, trim: true },
+  role:        { type: String, required: true, trim: true },
+  dateApplied: { type: String, required: true },
+  status:      { type: String, 
+                 enum: ["Applied", "Interview", "Rejected", "Offer"],
+                 default: "Applied" }
+}, { timestamps: true });  // Adds createdAt & updatedAt</pre>
+    <h4>Key Concepts</h4>
+    <ul>
+      <li><code>required: true</code> — Validation: company, role, and date are mandatory fields</li>
+      <li><code>enum</code> — Restricts status to only 4 valid values</li>
+      <li><code>trim: true</code> — Removes whitespace from the beginning and end of strings</li>
+      <li><code>timestamps: true</code> — Mongoose automatically adds <code>createdAt</code> and <code>updatedAt</code></li>
+    </ul>
+  </div>
+
+  <!-- jobRoutes.js -->
+  <div class="page-break"></div>
+  <div class="file-card no-break">
+    <div class="file-name">📄 backend/routes/jobRoutes.js — API Routes (CRUD)</div>
+    <p><strong>What it does:</strong> Handles all 4 REST API operations for job applications.</p>
+    
+    <table>
+      <thead>
+        <tr><th>Method</th><th>Endpoint</th><th>Mongoose Method</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>GET</strong></td><td>/api/jobs</td><td><code>Job.find().sort()</code></td><td>Fetch all jobs (newest first)</td></tr>
+        <tr><td><strong>POST</strong></td><td>/api/jobs</td><td><code>new Job().save()</code></td><td>Create a new job application</td></tr>
+        <tr><td><strong>PUT</strong></td><td>/api/jobs/:id</td><td><code>Job.findByIdAndUpdate()</code></td><td>Update a job's status</td></tr>
+        <tr><td><strong>DELETE</strong></td><td>/api/jobs/:id</td><td><code>Job.findByIdAndDelete()</code></td><td>Delete a job application</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Reliability Feature — DB Check Middleware</h4>
+    <pre>// Checks if DB is connected before any operation
+const checkDB = (req, res, next) =&gt; {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ 
+      message: "Database is connecting, please try again." 
+    });
+  }
+  next();
+};</pre>
+    <p>This prevents the server from crashing if a user tries to save data while the database is still connecting.</p>
+  </div>
+
+  <!-- ============ 6. FRONTEND EXPLANATION ============ -->
+  <h2>6. Frontend — File by File</h2>
+
+  <!-- api.js -->
+  <div class="file-card no-break">
+    <div class="file-name">📄 frontend/src/api.js — API Client</div>
+    <p><strong>What it does:</strong> Creates an Axios instance with <strong>30-second timeout</strong> and <strong>automatic retry</strong> (up to 2 retries).</p>
+    <h4>Why?</h4>
+    <ul>
+      <li><strong>Timeout:</strong> Render's free tier takes 30-60s to wake up (cold start). Without a long timeout, requests fail.</li>
+      <li><strong>Retry:</strong> If the backend returns a 503 (DB still connecting) or a network error, the frontend automatically waits 2 seconds and retries instead of showing an error.</li>
+    </ul>
+  </div>
+
+  <!-- App.jsx -->
+  <div class="file-card no-break">
+    <div class="file-name">📄 frontend/src/App.jsx — Main Component & State</div>
+    <p><strong>What it does:</strong> The central component that manages all application state and orchestrates data flow.</p>
+    <h4>React State Variables</h4>
+    <table>
+      <thead><tr><th>State</th><th>Type</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>jobs</code></td><td>Array</td><td>Stores all job applications from the backend</td></tr>
+        <tr><td><code>loading</code></td><td>Boolean</td><td>Shows "Loading..." while fetching data</td></tr>
+        <tr><td><code>filterStatus</code></td><td>String</td><td>Current active filter tab (All/Applied/Interview/etc.)</td></tr>
+        <tr><td><code>toast</code></td><td>Object</td><td>Controls the notification popup message</td></tr>
+        <tr><td><code>fetchError</code></td><td>String</td><td>Stores error message if backend is unreachable</td></tr>
+      </tbody>
+    </table>
+    <h4>Key Functions</h4>
+    <ul>
+      <li><code>fetchJobs()</code> — Called on page load via <code>useEffect</code>. Calls GET API and stores data in state.</li>
+      <li><code>handleAddJob(formData)</code> — Calls POST API. On success, adds the new job to the beginning of the <code>jobs</code> array.</li>
+      <li><code>handleStatusChange(id, newStatus)</code> — Calls PUT API. Updates the matching job in the state array.</li>
+      <li><code>handleDelete(id)</code> — Shows confirmation dialog. On confirm, calls DELETE API and filters the job out of state.</li>
+    </ul>
+  </div>
+
+  <!-- Components -->
+  <div class="page-break"></div>
+  <h3>React Components</h3>
+
+  <div class="two-col">
+    <div class="file-card no-break">
+      <div class="file-name">📄 StatsBar.jsx</div>
+      <p>Displays count badges at the top: Total, Applied, Interview, Offer, Rejected.</p>
+      <p>Computes counts by filtering the <code>jobs</code> array passed as a prop.</p>
+    </div>
+    <div class="file-card no-break">
+      <div class="file-name">📄 JobForm.jsx</div>
+      <p>A controlled form with 4 inputs: Company, Role, Date, Status.</p>
+      <p>Uses <code>useState</code> for form data. Calls <code>onJobAdded</code> prop on submit.</p>
+    </div>
+  </div>
+  <div class="file-card no-break">
+    <div class="file-name">📄 JobCard.jsx</div>
+    <p>Renders a single job application card showing company, role, date, and a colored status badge. Includes a status dropdown to update and a delete button.</p>
+  </div>
+
+  <!-- ============ 7. DATA FLOW ============ -->
+  <h2>7. Data Flow — How "Add Job" Works</h2>
+  <div class="no-break">
+    <ol>
+      <li>User fills the form in <code>JobForm.jsx</code> and clicks <strong>"+ Add Job"</strong></li>
+      <li><code>JobForm</code> calls <code>onJobAdded(formData)</code> which is the <code>handleAddJob</code> function from <code>App.jsx</code></li>
+      <li><code>handleAddJob</code> calls <code>addJob(formData)</code> from <code>api.js</code></li>
+      <li><code>api.js</code> sends a <strong>POST request</strong> with the form data as JSON to <code>http://backend-url/api/jobs</code></li>
+      <li>Express receives the request in <code>jobRoutes.js</code> → validates the data → creates a <strong>new Mongoose document</strong></li>
+      <li>Mongoose saves the document to <strong>MongoDB Atlas</strong> and returns the saved document with a generated <code>_id</code></li>
+      <li>Express sends the saved document as a <strong>JSON response (status 201)</strong> back to the frontend</li>
+      <li><code>App.jsx</code> adds the returned job to the beginning of the <code>jobs</code> state array</li>
+      <li>React <strong>re-renders</strong> all components — the new card appears in the list and stats update automatically</li>
+    </ol>
+  </div>
+
+  <!-- ============ 8. DATABASE ============ -->
+  <h2>8. Database — MongoDB Atlas</h2>
+  <div class="no-break">
+    <p><strong>MongoDB</strong> is a NoSQL document database. Data is stored as JSON-like documents (BSON) in collections.</p>
+    <h4>Sample Document in the "jobs" Collection</h4>
+    <pre>{
+  "_id": "66708b7d4f9c3f2d2a456abc",    // Auto-generated unique ID
+  "company": "Google",
+  "role": "Frontend Developer",
+  "dateApplied": "2026-06-18",
+  "status": "Applied",
+  "createdAt": "2026-06-18T00:26:00.000Z",  // Auto by timestamps
+  "updatedAt": "2026-06-18T00:26:00.000Z",  // Auto by timestamps
+  "__v": 0                                    // Version key
+}</pre>
+    <div class="info-box green">
+      <strong>Why MongoDB?</strong> It stores data in a flexible, JSON-like format which maps naturally to JavaScript objects — perfect for a JavaScript full-stack app. No need to define rigid table schemas like SQL.
+    </div>
+  </div>
+
+  <!-- ============ 9. DEPLOYMENT ============ -->
+  <h2>9. Deployment</h2>
+  <div class="no-break">
+    <table>
+      <thead><tr><th>Part</th><th>Platform</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Backend API</td><td><strong>Render</strong></td><td>Free Node.js hosting with environment variable support</td></tr>
+        <tr><td>Frontend App</td><td><strong>Vercel</strong></td><td>Free, fast, auto-detects Vite framework</td></tr>
+        <tr><td>Database</td><td><strong>MongoDB Atlas</strong></td><td>Free M0 tier, cloud-hosted, secure</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box amber">
+      <strong>Note:</strong> Render's free tier puts the backend to sleep after 15 min of inactivity. The first request takes ~30-60 seconds to wake up. The app handles this with a 30-second timeout and automatic retries.
+    </div>
+  </div>
+
+  <!-- ============ 10. POSSIBLE INTERVIEW Q&A ============ -->
+  <div class="page-break"></div>
+  <h2>10. Common Interview Questions & Answers</h2>
+
+  <div class="file-card no-break">
+    <h3>Q: What is MERN stack?</h3>
+    <p><strong>A:</strong> MERN stands for MongoDB, Express.js, React, and Node.js. It's a JavaScript-only tech stack — JavaScript runs on the frontend (React), backend (Node + Express), and the database stores JSON-like documents (MongoDB). This means one language across the entire application.</p>
+  </div>
+
+  <div class="file-card no-break">
+    <h3>Q: What is Mongoose and why use it?</h3>
+    <p><strong>A:</strong> Mongoose is an ODM (Object Data Modeling) library for MongoDB. It provides schema validation, type checking, and convenient query methods like <code>find()</code>, <code>save()</code>, <code>findByIdAndUpdate()</code>. Without Mongoose, we'd write raw MongoDB queries which are harder to maintain.</p>
+  </div>
+
+  <div class="file-card no-break">
+    <h3>Q: What is CORS and why do you need it?</h3>
+    <p><strong>A:</strong> CORS stands for Cross-Origin Resource Sharing. Browsers block requests from one origin (localhost:3000) to another (localhost:5000) by default for security. The <code>cors()</code> middleware tells the browser "it's okay, allow requests from the frontend."</p>
+  </div>
+
+  <div class="file-card no-break">
+    <h3>Q: What is a REST API?</h3>
+    <p><strong>A:</strong> REST (Representational State Transfer) is a design pattern for APIs. Each URL represents a resource (<code>/api/jobs</code>), and HTTP methods define the action: GET (read), POST (create), PUT (update), DELETE (remove). My backend follows this pattern.</p>
+  </div>
+
+  <div class="file-card no-break">
+    <h3>Q: What are React Hooks? Which ones do you use?</h3>
+    <p><strong>A:</strong> Hooks let you use React features in functional components. I use: <code>useState</code> — to manage local state (jobs array, loading status, form data). <code>useEffect</code> — to fetch data from the backend when the component first mounts (runs once on page load).</p>
+  </div>
+
+  <div class="file-card no-break">
+    <h3>Q: How do you handle errors?</h3>
+    <p><strong>A:</strong> Three layers: (1) <strong>Frontend:</strong> try/catch blocks in every handler + toast notifications for user feedback + automatic retry with Axios interceptors. (2) <strong>Backend:</strong> try/catch in every route + a DB check middleware that returns 503 if the database isn't ready. (3) <strong>Connection:</strong> Auto-reconnect logic in server.js retries the MongoDB connection every 5 seconds.</p>
+  </div>
+
+  <div class="file-card no-break">
+    <h3>Q: What is the difference between SQL and NoSQL?</h3>
+    <p><strong>A:</strong> SQL databases (MySQL, PostgreSQL) use fixed table schemas with rows and columns. NoSQL databases like MongoDB store flexible JSON-like documents in collections. I chose MongoDB because my data naturally fits a JSON structure, and it pairs well with JavaScript.</p>
+  </div>
+
+  <div class="file-card no-break">
+    <h3>Q: Why Vite instead of Create React App?</h3>
+    <p><strong>A:</strong> Vite is much faster than CRA. It uses native ES modules for instant dev server startup and Hot Module Replacement (HMR). CRA uses Webpack which is slower. Vite also produces smaller production bundles.</p>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div class="footer">
+    <p>Job Application Tracker — MERN Stack Project Guide</p>
+    <p>Prepared for Interview Reference</p>
+  </div>
+
+</body>
+</html>
