@@ -33,7 +33,9 @@ if (process.env.NODE_ENV === "production") {
 // Connect to MongoDB with retry logic
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    // Railway uses MONGO_URL by default
+    const mongoUri = process.env.MONGO_URI || process.env.MONGO_URL;
+    await mongoose.connect(mongoUri, {
       serverSelectionTimeoutMS: 10000,
       socketTimeoutMS: 45000,
     });
